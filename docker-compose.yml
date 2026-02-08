@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ursa
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: ./api
+    env_file:
+      - .env.ursa
+    environment:
+      DATABASE_URL: postgresql+psycopg2://postgres:postgres@db:5432/ursa
+      NOMINATIM_USER_AGENT: ursa-spatial-app/1.0 (wdquick9@gmail.com)
+      NOMINATIM_EMAIL: wdquick9@gmail.com
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api/app:/app/app
+
+volumes:
+  postgres_data:
