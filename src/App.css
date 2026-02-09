@@ -996,6 +996,11 @@
   border: 1px solid #35627d;
 }
 
+.chat-message-text {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
 .chat-input {
   display: flex;
   gap: 8px;

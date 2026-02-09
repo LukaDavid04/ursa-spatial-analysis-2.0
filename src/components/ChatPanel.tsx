@@ -191,7 +191,7 @@ const ChatPanel: FC<ChatPanelProps> = ({
                 message.role === "user" ? "user" : "bot"
               }`}
             >
-              <p>{message.text}</p>
+              <p className="chat-message-text">{message.text}</p>
             </div>
           ))}
           <div ref={messagesEndRef} aria-hidden="true" />

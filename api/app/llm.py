@@ -27,8 +27,20 @@ SYSTEM_PROMPT = (
     "a numbered list and ask the user to reply with the choice."
     "If you cannot answer, respond with 'I don't know.'"
     "Never fabricate information."
+    "Format every response for readability using Markdown."
+    "Use short paragraphs, headings when helpful, and numbered or bulleted lists so each"
+    " list item starts on its own line."
+    "When sharing place details, present one place per list item and use sub-bullets for"
+    " fields like location and coordinates."
     "URSA stands for 'Urban Reasoning & Spatial Analysis'. Your goal is to help users analyze and interact with spatial data effectively."
 )
+
+
+def _normalize_assistant_text(text: str) -> str:
+    cleaned = _strip_structured_payload(text).strip()
+    if "\\n" not in cleaned:
+        return cleaned
+    return cleaned.replace("\\n", "\n")
 
 
 def _client() -> OpenAI:
@@ -395,7 +407,7 @@ def chat_with_tools(
                 previous_response_id=response.id,
             )
 
-        assistant_text = _strip_structured_payload(_extract_assistant_text(response))
+        assistant_text = _normalize_assistant_text(_extract_assistant_text(response))
         return schemas.ChatResponse(
             assistant_text=assistant_text,
             actions=actions,
@@ -418,7 +430,7 @@ def chat_with_tools(
         )
 
         message = response.choices[0].message
-        assistant_text = _strip_structured_payload(message.content or "")
+        assistant_text = _normalize_assistant_text(message.content or "")
         history.append(message.model_dump())
         _trim_history(history)
 
