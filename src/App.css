@@ -987,7 +987,7 @@
 
 .chat-message.bot,
 .chat-message.user {
-  padding: 4px 14px;
+  padding: 6px 16px;
 }
 
 .chat-message.bot {
