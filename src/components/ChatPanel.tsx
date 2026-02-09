@@ -173,7 +173,7 @@ const ChatPanel: FC<ChatPanelProps> = ({
       <div className="chat-content" aria-hidden={!isOpen}>
         <header className="chat-header">
           <div>
-            <p className="chat-title">URSA Assistant</p>
+            <p className="chat-title">URSA Assistant 2.0</p>
             <p className="chat-subtitle">
               Ask a question and let's explore together.
             </p>
